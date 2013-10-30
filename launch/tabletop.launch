@@ -1,0 +1,26 @@
+<launch>
+    <arg name="debug" default="false" />
+    <arg unless="$(arg debug)" name="launch_prefix" value="" />
+    <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+    <arg name="recognition_config_file"
+         default="$(find uw_object_recognition)/config/tabletop/my.detection.object.ros.ork"/>
+    <arg name="robot_frame"              default="base_link"/>
+    <arg name="sensor_frame"             default="head_mount_kinect_rgb_optical_frame"/>
+
+    <node name="recognize_tabletop_objects_server" pkg="object_recognition_ros" type="server" 
+          args="--node_name tabletop_object_recognition -c $(arg recognition_config_file)"
+          launch-prefix="$(arg launch_prefix)"
+          output="screen">
+    </node>
+
+    <param name="tabletop_object_recognition/robot_frame"       value="$(arg robot_frame)"/>
+    <param name="tabletop_object_recognition/sensor_frame"      value="$(arg sensor_frame)"/>
+    <param name="tabletop_object_recognition/filter_planes"     value="true"/>
+    <param name="tabletop_object_recognition/min_table_height"  value="0.2"/>
+    <param name="tabletop_object_recognition/max_table_height"  value="1.0"/>
+    <param name="tabletop_object_recognition/max_angle_diff"    value="0.1"/>
+    <param name="tabletop_object_recognition/table_normal_x"    value="0"/>
+    <param name="tabletop_object_recognition/table_normal_y"    value="0"/>
+    <param name="tabletop_object_recognition/table_normal_z"    value="1"/>
+</launch>
