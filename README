@@ -1,1 +1,18 @@
 Object Recognition using ORK at University of Washington
+
+UW ORK is required to run the object recognition applications in this package. 
+UW ORK is the latest dev version of ORK 
+(Object Recognition Kitchen http://wg-perception.github.io/object_recognition_core/) 
+with a forked tabletop package with some customized pipelines and sinks.
+
+
+To install UW_ORK:
+
+mkdir uw_ork && cd uw_ork
+wstool init src https://raw.github.com/jiang0131/uw_object_recognition/master/uw_ork.rosinstall
+cd src && wstool update -j8
+cd .. && rosdep install --from-paths src -i -y
+catkin_make
+source devel/setup.bash
+
+Add the last line to $HOME/.bashrc to overlay this workspace automatically.
